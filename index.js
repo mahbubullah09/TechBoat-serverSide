@@ -95,14 +95,32 @@ app.get('/reviews',  async(req,res)=>{
 
 //reveiw by products 
 app.get('/review/products', async (req,res) =>{
-    console.log(req.query.gadget_id);
-
-    let query= {};
+      let query= {};
   
     if(req.query?.gadget_id){
         query = {gadget_id: req.query.gadget_id}
     }
       const result = await reviewCollection.find(query).toArray();
+    res.send(result);
+})
+
+//vote update
+
+app.put('/products/:id', async(req,res)=>{
+    const id = req.params.id;
+    console.log('id' ,id);
+    const filter ={_id : new ObjectId(id)}
+    const options = {upsert: true};
+    const updatedBookings= req.body;
+    const info ={
+        $set: {
+            vote_count: updatedBookings. upvote, 
+             
+        }
+    }
+
+    const result = await productsCollection.updateOne(filter, info)
+    
     res.send(result);
 })
 
