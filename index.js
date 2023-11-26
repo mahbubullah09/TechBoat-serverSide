@@ -42,7 +42,8 @@ async function run() {
 
     //client api
 app.get('/products',  async(req,res)=>{
-    const cursor = productsCollection.find();
+   let query = {status: 'accepted' }
+    const cursor = productsCollection.find(query);
     const result = await cursor.toArray();
     res.send(result);
 })
