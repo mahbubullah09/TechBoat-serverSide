@@ -41,8 +41,14 @@ async function run() {
 
 
     //client api
-app.get('/products',  async(req,res)=>{
-   let query = {status: 'accepted' }
+app.get('/products', async (req,res)=>{
+
+    const filter = req.query
+    console.log(filter);  
+       const query = {
+        status: 'accepted' ,
+        'tags.text': {$regex: filter.search , $options: 'i'}
+        }
     const cursor = productsCollection.find(query);
     const result = await cursor.toArray();
     res.send(result);
