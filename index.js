@@ -86,6 +86,27 @@ app.post('/reviews', async (req,res) =>{
     res.send(result);
 })
 
+//get all review
+app.get('/reviews',  async(req,res)=>{
+    const cursor = reviewCollection.find();
+    const result = await cursor.toArray();
+    res.send(result);
+})
+
+//reveiw by products 
+app.get('/review/products', async (req,res) =>{
+    console.log(req.query.gadget_id);
+
+    let query= {};
+  
+    if(req.query?.gadget_id){
+        query = {gadget_id: req.query.gadget_id}
+    }
+      const result = await reviewCollection.find(query).toArray();
+    res.send(result);
+})
+
+
 
 
 
