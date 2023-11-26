@@ -66,6 +66,23 @@ app.get('/products/search', async (req,res)=>{
     res.send(result);
 })
 
+//get product by id
+
+// app.get('/products/id', async(req,res) =>{
+//     const id = req.params.id;
+//     console.log(res.params);
+//     const query = { _id: new ObjectId(id)}
+//     const result = await productsCollection.findOne(query);
+//     res.send(result)
+// })
+app.get('/products/:id', async(req,res) =>{
+    const id = req.params.id;
+    console.log(res.params);
+    const query = { _id: new ObjectId(id)}
+    const result = await productsCollection.findOne(query);
+    res.send(result)
+})
+
 
 
 
