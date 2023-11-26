@@ -37,6 +37,7 @@ async function run() {
 
 
     const productsCollection = client.db('TechBoat').collection("Products");
+    const reviewCollection= client.db('TechBoat').collection("Reviews");
 
 
 
@@ -68,13 +69,7 @@ app.get('/products/search', async (req,res)=>{
 
 //get product by id
 
-// app.get('/products/id', async(req,res) =>{
-//     const id = req.params.id;
-//     console.log(res.params);
-//     const query = { _id: new ObjectId(id)}
-//     const result = await productsCollection.findOne(query);
-//     res.send(result)
-// })
+
 app.get('/products/:id', async(req,res) =>{
     const id = req.params.id;
     console.log(res.params);
@@ -82,6 +77,15 @@ app.get('/products/:id', async(req,res) =>{
     const result = await productsCollection.findOne(query);
     res.send(result)
 })
+
+//post review
+app.post('/reviews', async (req,res) =>{
+    const Reviews = req.body;
+    console.log(Reviews);
+    const result = await reviewCollection.insertOne(Reviews)
+    res.send(result);
+})
+
 
 
 
