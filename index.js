@@ -43,6 +43,18 @@ async function run() {
     //client api
 app.get('/products', async (req,res)=>{
 
+ 
+       const query = {
+        status: 'accepted' 
+               }
+    const cursor = productsCollection.find(query);
+    const result = await cursor.toArray();
+    res.send(result);
+})
+
+
+app.get('/products/search', async (req,res)=>{
+
     const filter = req.query
     console.log(filter);  
        const query = {
