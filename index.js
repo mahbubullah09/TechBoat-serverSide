@@ -246,6 +246,15 @@ app.post('/reports', async (req,res) =>{
   const result = await reportCollection.insertOne(reports)
   res.send(result);
 })
+//downvote get
+
+app.get('/reports', async (req,res)=>{
+  
+  const cursor = reportCollection.find();
+  const result = await cursor.toArray();
+  res.send(result);
+  })
+  
 
 
 
