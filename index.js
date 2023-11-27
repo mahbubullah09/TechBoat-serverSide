@@ -239,13 +239,8 @@ app.get('/downvotes/email', async (req,res) =>{
 res.send(result);
 })
 
-//post report
-app.post('/reports', async (req,res) =>{
-  const reports = req.body;
-  console.log(reports);
-  const result = await reportCollection.insertOne(reports)
-  res.send(result);
-})
+
+
 //downvote get
 
 app.get('/reports', async (req,res)=>{
@@ -254,6 +249,28 @@ app.get('/reports', async (req,res)=>{
   const result = await cursor.toArray();
   res.send(result);
   })
+
+
+  //post report
+app.post('/reports', async (req,res) =>{
+  const reports = req.body;
+  console.log(reports);
+  const result = await reportCollection.insertOne(reports)
+  res.send(result);
+})
+
+
+  //get report by id
+
+
+app.get('/reports/:id', async(req,res) =>{
+  const id = req.params.id;
+  console.log(res.params);
+  const query = { _id: new ObjectId(id)}
+  const result = await reportCollection.findOne(query);
+  res.send(result)
+})
+
   
 
 
