@@ -102,6 +102,34 @@ app.get('/product/:email', async (req,res) =>{
 res.send(result);
 })
 
+//update
+
+app.put('/products/:id', async(req,res)=>{
+  const id = req.params.id;
+  const filter ={_id : new ObjectId(id)}
+  const options = {upsert: true};
+  const updatedProducts= req.body;
+  const info ={
+      $set: {
+           name: updatedProducts.name, 
+           image: updatedProducts.image, 
+          external_link: updatedProducts.external_link, 
+          description: updatedProducts.description, 
+          tags: updatedProducts.tags, 
+          OwnerName: updatedProducts.OwnerName, 
+          email: updatedProducts.email,
+          OwnerImage: updatedProducts.OwnerImage,
+          status: updatedProducts.status,
+          time: updatedProducts.time
+      }
+  }
+
+  const result = await productsCollection.updateOne(filter, info)
+  
+  res.send(result);
+})
+
+
 
 //post review
 app.post('/reviews', async (req,res) =>{
