@@ -41,6 +41,7 @@ async function run() {
     const upvoteCollection= client.db('TechBoat').collection("upvotes");
     const downoteCollection= client.db('TechBoat').collection("downvotes");
     const reportCollection= client.db('TechBoat').collection("reports");
+    const featureCollection= client.db('TechBoat').collection("features");
 
 
 
@@ -287,6 +288,15 @@ app.get('/reports/:id', async(req,res) =>{
   const query = { _id: new ObjectId(id)}
   const result = await reportCollection.findOne(query);
   res.send(result)
+})
+
+//feature product add
+//post product
+app.post('/features', async (req,res) =>{
+  const products = req.body;
+  console.log(products);
+  const result = await featureCollection.insertOne(products)
+  res.send(result);
 })
 
   
