@@ -38,6 +38,7 @@ async function run() {
 
     const productsCollection = client.db('TechBoat').collection("Products");
     const reviewCollection= client.db('TechBoat').collection("Reviews");
+    const upvoteCollection= client.db('TechBoat').collection("upvotes");
 
 
 
@@ -104,25 +105,17 @@ app.get('/review/products', async (req,res) =>{
     res.send(result);
 })
 
-//vote update
+//upvote get
 
-app.put('/products/:id', async(req,res)=>{
-    const id = req.params.id;
-    console.log('id' ,id);
-    const filter ={_id : new ObjectId(id)}
-    const options = {upsert: true};
-    const updatedBookings= req.body;
-    const info ={
-        $set: {
-            vote_count: updatedBookings. upvote, 
-             
-        }
-    }
+app.get('/upvotes', async (req,res)=>{
 
-    const result = await productsCollection.updateOne(filter, info)
-    
-    res.send(result);
+ 
+  
+const cursor = upvoteCollection.find();
+const result = await cursor.toArray();
+res.send(result);
 })
+
 
 
 
