@@ -89,6 +89,20 @@ app.get('/products/:id', async(req,res) =>{
     res.send(result)
 })
 
+//get product by owner
+
+
+app.get('/product/:email', async (req,res) =>{
+  const email = req.params.email;
+  console.log(res.params);
+
+ 
+   const  query = {email: req?.params?.email}
+  const result = await productsCollection.find(query).toArray();
+res.send(result);
+})
+
+
 //post review
 app.post('/reviews', async (req,res) =>{
     const Reviews = req.body;
