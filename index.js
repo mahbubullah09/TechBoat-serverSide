@@ -116,6 +116,21 @@ const result = await cursor.toArray();
 res.send(result);
 })
 
+app.get('/upvotes/:id', async(req,res) =>{
+  const id = req.params.id;
+  console.log(res.params);
+  const query = { _id: new ObjectId(id)}
+  const result = await upvoteCollection.findOne(query);
+  res.send(result)
+})
+
+//post uovotes
+app.post('/upvotes', async (req,res) =>{
+  const upvotes = req.body;
+  console.log(upvotes);
+  const result = await upvoteCollection.insertOne(upvotes)
+  res.send(result);
+})
 
 
 
