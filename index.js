@@ -136,7 +136,16 @@ if(req.query?.product_id){
 res.send(result);
 })
 
+//upvotes by email
+app.get('/upvotes/email', async (req,res) =>{
+  let query= {};
 
+  if(req.query?.email){
+    query = {user_mail: req?.query?.email}
+}
+  const result = await upvoteCollection.find(query).toArray();
+res.send(result);
+})
 
 //downvote get
 
