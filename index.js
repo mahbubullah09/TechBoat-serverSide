@@ -40,6 +40,7 @@ async function run() {
     const reviewCollection= client.db('TechBoat').collection("Reviews");
     const upvoteCollection= client.db('TechBoat').collection("upvotes");
     const downoteCollection= client.db('TechBoat').collection("downvotes");
+    const reportCollection= client.db('TechBoat').collection("reports");
 
 
 
@@ -102,7 +103,7 @@ app.get('/product/:email', async (req,res) =>{
 res.send(result);
 })
 
-//update
+//update product
 
 app.put('/products/:id', async(req,res)=>{
   const id = req.params.id;
@@ -237,6 +238,15 @@ app.get('/downvotes/email', async (req,res) =>{
   const result = await downoteCollection.find(query).toArray();
 res.send(result);
 })
+
+//post report
+app.post('/reports', async (req,res) =>{
+  const reports = req.body;
+  console.log(reports);
+  const result = await reportCollection.insertOne(reports)
+  res.send(result);
+})
+
 
 
 
