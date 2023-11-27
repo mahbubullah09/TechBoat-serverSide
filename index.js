@@ -55,6 +55,15 @@ app.get('/products', async (req,res)=>{
     res.send(result);
 })
 
+//post product
+app.post('/products', async (req,res) =>{
+  const products = req.body;
+  console.log(products);
+  const result = await productsCollection.insertOne(products)
+  res.send(result);
+})
+
+
 
 app.get('/products/search', async (req,res)=>{
 
@@ -165,7 +174,7 @@ app.post('/downvotes', async (req,res) =>{
   res.send(result);
 })
 
-//upvotes by products id
+//downvotes by products id
 app.get('/downvotes/products', async (req,res) =>{
   let query= {};
 
@@ -176,7 +185,7 @@ if(req.query?.product_id){
 res.send(result);
 })
 
-//upvotes by email
+//downvotes by email
 app.get('/downvotes/email', async (req,res) =>{
   let query= {};
 
