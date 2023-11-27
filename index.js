@@ -165,6 +165,28 @@ app.post('/downvotes', async (req,res) =>{
   res.send(result);
 })
 
+//upvotes by products id
+app.get('/downvotes/products', async (req,res) =>{
+  let query= {};
+
+if(req.query?.product_id){
+    query = {product_id: req.query.product_id}
+}
+  const result = await downoteCollection.find(query).toArray();
+res.send(result);
+})
+
+//upvotes by email
+app.get('/downvotes/email', async (req,res) =>{
+  let query= {};
+
+  if(req.query?.email){
+    query = {user_mail: req?.query?.email}
+}
+  const result = await downoteCollection.find(query).toArray();
+res.send(result);
+})
+
 
 
 
