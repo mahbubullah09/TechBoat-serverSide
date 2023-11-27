@@ -39,6 +39,7 @@ async function run() {
     const productsCollection = client.db('TechBoat').collection("Products");
     const reviewCollection= client.db('TechBoat').collection("Reviews");
     const upvoteCollection= client.db('TechBoat').collection("upvotes");
+    const downoteCollection= client.db('TechBoat').collection("downvotes");
 
 
 
@@ -105,30 +106,53 @@ app.get('/review/products', async (req,res) =>{
     res.send(result);
 })
 
+
 //upvote get
 
 app.get('/upvotes', async (req,res)=>{
-
- 
   
 const cursor = upvoteCollection.find();
 const result = await cursor.toArray();
 res.send(result);
 })
 
-app.get('/upvotes/:id', async(req,res) =>{
-  const id = req.params.id;
-  console.log(res.params);
-  const query = { _id: new ObjectId(id)}
-  const result = await upvoteCollection.findOne(query);
-  res.send(result)
-})
 
 //post uovotes
 app.post('/upvotes', async (req,res) =>{
   const upvotes = req.body;
   console.log(upvotes);
   const result = await upvoteCollection.insertOne(upvotes)
+  res.send(result);
+})
+
+//upvotes by products id
+app.get('/upvotes/products', async (req,res) =>{
+  let query= {};
+
+if(req.query?.product_id){
+    query = {product_id: req.query.product_id}
+}
+  const result = await upvoteCollection.find(query).toArray();
+res.send(result);
+})
+
+
+
+//downvote get
+
+app.get('/downvotes', async (req,res)=>{
+  
+const cursor = downoteCollection.find();
+const result = await cursor.toArray();
+res.send(result);
+})
+
+
+//post downvotes
+app.post('/downvotes', async (req,res) =>{
+  const upvotes = req.body;
+  console.log(upvotes);
+  const result = await downoteCollection.insertOne(upvotes)
   res.send(result);
 })
 
