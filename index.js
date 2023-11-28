@@ -47,7 +47,7 @@ async function run() {
 
     //get all products
 
-    app.get('/allproducts', async (req,res)=>{      
+  app.get('/allproducts', async (req,res)=>{      
    const cursor = productsCollection.find();
    const result = await cursor.toArray();
    res.send(result);
@@ -278,7 +278,7 @@ res.send(result);
 
 
 
-//downvote get
+//report get
 
 app.get('/reports', async (req,res)=>{
   
@@ -325,6 +325,22 @@ app.post('/features', async (req,res) =>{
   console.log(products);
   const result = await featureCollection.insertOne(products)
   res.send(result);
+})
+
+app.get('/features', async (req,res)=>{      
+  const cursor = featureCollection.find();
+  const result = await cursor.toArray();
+  res.send(result);
+})
+
+//all products by id
+
+app.get('/features/:id', async(req,res) =>{
+ const id = req.params.id;
+ console.log(res.params);
+ const query = { _id: new ObjectId(id)}
+ const result = await featureCollection.findOne(query);
+ res.send(result)
 })
 
   
