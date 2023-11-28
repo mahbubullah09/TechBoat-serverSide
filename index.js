@@ -380,7 +380,28 @@ app.delete('/coupons/:id', async (req,res) =>{
   const result = await couponCollection.deleteOne(query)
   res.send(result);
 })
+
+//update coupon
+
+app.put('/coupons/:id', async(req,res)=>{
+  const id = req.params.id;
+  const filter ={_id : new ObjectId(id)}
+  const options = {upsert: true};
+  const updatedcoupon= req.body;
+  const info ={
+      $set: {
+           code: updatedcoupon.code, 
+           date: updatedcoupon.date, 
+          discount: updatedcoupon.discount, 
+          description: updatedcoupon.description, 
+        
+      }
+  }
+
+  const result = await couponCollection.updateOne(filter, info)
   
+  res.send(result);
+})
 
 
 
