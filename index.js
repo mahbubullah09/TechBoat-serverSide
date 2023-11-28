@@ -42,6 +42,7 @@ async function run() {
     const downoteCollection= client.db('TechBoat').collection("downvotes");
     const reportCollection= client.db('TechBoat').collection("reports");
     const featureCollection= client.db('TechBoat').collection("features");
+    const couponCollection= client.db('TechBoat').collection("coupons");
 
 
 
@@ -327,13 +328,15 @@ app.post('/features', async (req,res) =>{
   res.send(result);
 })
 
+
+//get feature
 app.get('/features', async (req,res)=>{      
   const cursor = featureCollection.find();
   const result = await cursor.toArray();
   res.send(result);
 })
 
-//all products by id
+//all features by id
 
 app.get('/features/:id', async(req,res) =>{
  const id = req.params.id;
@@ -343,6 +346,40 @@ app.get('/features/:id', async(req,res) =>{
  res.send(result)
 })
 
+
+app.post('/coupons', async (req,res) =>{
+  const coupons = req.body;
+  console.log(coupons);
+  const result = await couponCollection.insertOne(coupons)
+  res.send(result);
+})
+
+
+//get coupons
+app.get('/coupons', async (req,res)=>{      
+  const cursor = couponCollection.find();
+  const result = await cursor.toArray();
+  res.send(result);
+})
+
+//all coupons by id
+
+app.get('/coupons/:id', async(req,res) =>{
+  const id = req.params.id;
+  console.log(res.params);
+  const query = { _id: new ObjectId(id)}
+  const result = await couponCollection.findOne(query);
+  res.send(result)
+ })
+
+ //delete coupons
+app.delete('/coupons/:id', async (req,res) =>{
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id)}
+
+  const result = await couponCollection.deleteOne(query)
+  res.send(result);
+})
   
 
 
