@@ -62,6 +62,15 @@ app.get('/allproducts/:id', async(req,res) =>{
   const result = await productsCollection.findOne(query);
   res.send(result)
 })
+//delete all product by id
+app.delete('/allproducts/:id', async (req,res) =>{
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id)}
+
+  const result = await productsCollection.deleteOne(query)
+  res.send(result);
+})
+
 
     //client api
 app.get('/products', async (req,res)=>{
@@ -107,6 +116,15 @@ app.get('/products/:id', async(req,res) =>{
     const query = { _id: new ObjectId(id)}
     const result = await productsCollection.findOne(query);
     res.send(result)
+})
+
+//delete all product by id
+app.delete('/products/:id', async (req,res) =>{
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id)}
+
+  const result = await productsCollection.deleteOne(query)
+  res.send(result);
 })
 
 //get product by owner
@@ -289,6 +307,16 @@ app.get('/reports/:id', async(req,res) =>{
   const result = await reportCollection.findOne(query);
   res.send(result)
 })
+
+//delete all product by id
+app.delete('/reports/:id', async (req,res) =>{
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id)}
+
+  const result = await reportCollection.deleteOne(query)
+  res.send(result);
+})
+
 
 //feature product add
 //post product
