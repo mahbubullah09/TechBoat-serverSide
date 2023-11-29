@@ -459,6 +459,18 @@ app.put('/users/:id', async(req,res)=>{
   res.send(result);
 })
   
+//verifyToken, verifyAdmin,
+app.get("/admin-stats",  async (req, res) => {
+  const users = await userCollection.estimatedDocumentCount();
+  const products = await productsCollection.estimatedDocumentCount();
+  const reviews = await reviewCollection.estimatedDocumentCount();
+
+  res.send([
+    { users: users },
+    { products: products },
+    { reviews: reviews },
+  ]);
+});
   
 
 
