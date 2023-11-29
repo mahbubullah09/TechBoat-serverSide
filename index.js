@@ -43,6 +43,7 @@ async function run() {
     const reportCollection= client.db('TechBoat').collection("reports");
     const featureCollection= client.db('TechBoat').collection("features");
     const couponCollection= client.db('TechBoat').collection("coupons");
+    const userCollection  = client.db('TechBoat').collection("users");
 
 
 
@@ -402,6 +403,18 @@ app.put('/coupons/:id', async(req,res)=>{
   
   res.send(result);
 })
+
+app.post("/users", async (req, res) => {
+  const user = req.body;
+  // insert email to check if user already exists
+  const query = { email: user.email };
+  const existingUser = await userCollection.findOne(query);
+  if (existingUser) {
+    return res.send({ message: "user already exists", insertedId: null });
+  }
+  const result = await userCollection.insertOne(user);
+  res.send(result);
+});
 
 
 
