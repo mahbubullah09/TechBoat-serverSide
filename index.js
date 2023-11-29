@@ -404,6 +404,8 @@ app.put('/coupons/:id', async(req,res)=>{
   res.send(result);
 })
 
+//user add
+
 app.post("/users", async (req, res) => {
   const user = req.body;
   // insert email to check if user already exists
@@ -415,6 +417,49 @@ app.post("/users", async (req, res) => {
   const result = await userCollection.insertOne(user);
   res.send(result);
 });
+
+//user get
+
+app.get('/users', async (req,res)=>{
+  
+  const cursor = userCollection.find();
+  const result = await cursor.toArray();
+  res.send(result);
+  })
+  //all users by id
+
+app.get('/users/:id', async(req,res) =>{
+  const id = req.params.id;
+  console.log(res.params);
+  const query = { _id: new ObjectId(id)}
+  const result = await userCollection.findOne(query);
+  res.send(result)
+ })
+
+
+ //update user
+
+app.put('/users/:id', async(req,res)=>{
+  const id = req.params.id;
+  const filter ={_id : new ObjectId(id)}
+  const options = {upsert: true};
+  const updateduser= req.body;
+  const info ={
+      $set: {
+           name: updateduser.name, 
+           email: updateduser.email, 
+          role: updateduser.role
+       
+        
+      }
+  }
+
+  const result = await userCollection.updateOne(filter, info)
+  
+  res.send(result);
+})
+  
+  
 
 
 
