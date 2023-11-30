@@ -22,6 +22,33 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParsar());
 
+const verifyToken = async(req,res, next)=> {
+  
+  const token = req.cookies?.token;
+  console.log('value of token', token);
+  if(!token){
+    return res.status(401).send({ message: 'Not Authorizes'})
+
+  }
+    jwt.verify(token, process.env.Token, (err,decode) =>{
+    //error
+    if(err){
+      console.log(err);
+      return res.status(401).send({ message: 'Not Authorizes'})
+    }
+    //decode
+    console.log('value of token:', decode);
+    req.user= decode;
+    console.log(decode);
+
+    next();
+  })
+  
+
+}
+
+
+
 
 
 
