@@ -192,7 +192,7 @@ app.delete('/products/:id', async (req,res) =>{
 //get product by owner
 
 
-app.get('/product/:email', async (req,res) =>{
+app.get('/product/:email',verifyToken, async (req,res) =>{
   const email = req.params.email;
   console.log(res.params);
 
@@ -288,7 +288,7 @@ res.send(result);
 })
 
 //upvotes by email
-app.get('/upvotes/email', async (req,res) =>{
+app.get('/upvotes/email', verifyToken, async (req,res) =>{
   let query= {};
 
   if(req.query?.email){
@@ -328,7 +328,7 @@ res.send(result);
 })
 
 //downvotes by email
-app.get('/downvotes/email', async (req,res) =>{
+app.get('/downvotes/email', verifyToken, async (req,res) =>{
   let query= {};
 
   if(req.query?.email){
@@ -520,7 +520,7 @@ app.put('/users/:id', async(req,res)=>{
 })
 
 //users by email
-app.get('/user/email', async (req,res) =>{
+app.get('/user/email',verifyToken, async (req,res) =>{
   let query= {};
 
   if(req.query?.email){
