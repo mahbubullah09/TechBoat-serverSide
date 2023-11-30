@@ -47,6 +47,32 @@ const verifyToken = async(req,res, next)=> {
 
 }
 
+//logut token
+app.post('/logout', async (req, res) => {
+  const user = req.body;
+  console.log('logging out', user);
+  res
+      .clearCookie('token', { maxAge: 0, sameSite: 'none', secure: true })
+      .send({ success: true })
+})
+
+
+//auth api
+console.log(process.env.Token)
+app.post('/jwt', async(req,res) =>{
+const user = req.body;
+console.log(user);
+
+
+
+const token = jwt.sign(user, process.env.Token, {expiresIn: '1h'})
+res
+.cookie('token', token, { httpOnly: true, 
+  secure: process.env.NODE_ENV === 'production', 
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', })
+.send({success: true})
+})
+
 
 
 
