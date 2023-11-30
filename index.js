@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-// const jwt = require('jsonwebtoken');
-// const cookieParsar = require('cookie-parser')
+const jwt = require('jsonwebtoken');
+const cookieParsar = require('cookie-parser')
 const { MongoClient, ServerApiVersion, ObjectId, ReturnDocument } = require('mongodb');
 require('dotenv').config();
 const app =express();
@@ -10,11 +10,18 @@ const port = process.env.PORT || 5000;
 
 
 
-
-console.log(process.env.DB_USER);
-console.log(process.env.DB_PASS);
-app.use(cors());
+//middlewere
+app.use(cors({
+  origin: [
+      'http://localhost:5173',
+      // 'https://roomjet-1d0e8.web.app',
+      // 'https://roomjet-1d0e8.firebaseapp.com'
+  ],
+  credentials: true
+}));
 app.use(express.json());
+app.use(cookieParsar());
+
 
 
 
